@@ -293,13 +293,13 @@ $roDry = Join-Path $testRoot 'ro-dry'
 New-Game $roDry @('gdx3')
 New-Item -ItemType Directory -Path (Join-Path $roDry 'settings\text_en') -Force | Out-Null
 Set-Content -LiteralPath (Join-Path $roDry 'settings\text_en\tags_items.txt') -Value 'legacy' -Encoding UTF8
-$roRule = Add-DenyWrite $roDry -Inherit
+$roRule = Add-DenyWrite (Join-Path $roDry 'settings') -Inherit
 $writeDenied = $false
 try { [IO.File]::WriteAllText((Join-Path $roDry 'settings\probe.txt'), 'probe') } catch { $writeDenied = $true }
 $before = Get-TreeHash $roDry
 $roRun = Invoke-InstallerOutput @{ FilePath = $enFile; GamePath = $roDry; Language = 'en'; Location = 'game'; DryRun = $true }
 $after = Get-TreeHash $roDry
-Remove-DenyWrite $roDry $roRule
+Remove-DenyWrite (Join-Path $roDry 'settings') $roRule
 Assert $writeDenied 'read-only settings fixture denies writes'
 Assert ($roRun.Ok -and $before -eq $after) 'dry run on a read-only tree changes nothing'
 Assert (-not (Test-Path -LiteralPath (Join-Path $roDry 'settings\.rainbow-backup'))) 'dry run creates no backup directory'
