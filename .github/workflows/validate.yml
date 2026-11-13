@@ -1,0 +1,17 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer checks (PowerShell 7)
+        shell: pwsh
+        run: ./tests/check.ps1
+      - name: Installer checks (Windows PowerShell 5.1)
+        shell: powershell
+        run: ./tests/check.ps1
