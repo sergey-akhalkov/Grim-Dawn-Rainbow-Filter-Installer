@@ -190,15 +190,18 @@ function Get-ItemProperty {
     [CmdletBinding()]
     param($Path)
     if ($Path -like '*GOG.com\Games\1449651388*') { return [pscustomobject]@{ path = $gogGame } }
+    if ($Path -like '*Valve\Steam*') { return [pscustomobject]@{ SteamPath = 'Z:\MissingSteam' } }
     return $null
 }
+$gogFound = $null
+$gogError = $null
 try {
-    $gogFound = Find-GameRoot
+    try { $gogFound = Find-GameRoot } catch { $gogError = $_ }
 } finally {
     Remove-Item Function:\Get-ItemProperty -ErrorAction SilentlyContinue
     $env:DSH_RAINBOW_GAME_ROOT = $missingGame
 }
-Assert ($gogFound -eq (Resolve-Path -LiteralPath $gogGame).Path) 'GOG registry discovery resolves the game root'
+Assert ($null -eq $gogError -and $gogFound -eq (Resolve-Path -LiteralPath $gogGame).Path) 'GOG discovery survives a stale Steam registry drive'
 
 # --- script surface ---------------------------------------------------------
 Assert ($null -ne (Get-Command -Name $installer -ErrorAction SilentlyContinue)) 'install.ps1 resolves as a command'

@@ -203,7 +203,7 @@ function Get-SteamLibraries {
     }
     if (-not $steam) { return $libraries }
     $libraries.Add($steam)
-    $vdf = Join-Path $steam 'steamapps\libraryfolders.vdf'
+    $vdf = [IO.Path]::Combine($steam, 'steamapps\libraryfolders.vdf')
     if (Test-Path -LiteralPath $vdf) {
         $raw = Get-Content -LiteralPath $vdf -Raw -ErrorAction SilentlyContinue
         if ($raw) {
@@ -225,7 +225,7 @@ function Find-GameRoot {
     }
     $candidates = New-Object System.Collections.Generic.List[string]
     foreach ($library in (Get-SteamLibraries)) {
-        $candidates.Add((Join-Path $library 'steamapps\common\Grim Dawn'))
+        $candidates.Add([IO.Path]::Combine($library, 'steamapps\common\Grim Dawn'))
     }
     foreach ($key in @('HKLM:\SOFTWARE\WOW6432Node\GOG.com\Games\1449651388', 'HKLM:\SOFTWARE\GOG.com\Games\1449651388')) {
         $path = Get-RegistryValue $key 'path'
