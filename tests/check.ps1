@@ -158,6 +158,9 @@ Assert ($null -eq (Get-GameLanguage $userData)) 'empty language is not resolved 
 Assert ((Resolve-Language $null $userData) -eq (Get-OsLanguage)) 'missing language falls back to the OS culture'
 Set-Content -LiteralPath $options -Value 'language = "Klingon"' -Encoding UTF8
 Assert ($null -eq (Get-GameLanguage $userData)) 'unknown language is not resolved from the game'
+$longOptions = @(1..200 | ForEach-Object { "# filler $_" }) + 'language = "Community Russian"'
+Set-Content -LiteralPath $options -Value $longOptions -Encoding UTF8
+Assert ((Get-GameLanguage $userData) -eq 'ru') 'language setting after line 200 is detected'
 
 function Get-UICulture { [pscustomobject]@{ Name = 'ru-RU' } }
 try { Assert ((Get-OsLanguage) -eq 'ru') 'supported OS culture maps to its language' } finally { Remove-Item Function:\Get-UICulture -ErrorAction SilentlyContinue }
@@ -205,6 +208,12 @@ $head = ((Get-Content -LiteralPath $installer -Raw -Encoding UTF8) -split [regex
 $iexBound = $true
 try { & { $null = Invoke-Expression ($head + "`n'PARAM-OK'") } } catch { $iexBound = $false }
 Assert $iexBound 'parameter block works when invoked via iex'
+$installerBytes = [IO.File]::ReadAllBytes($installer)
+Assert ($installerBytes[0] -eq 35) 'installer has no UTF-8 BOM'
+Assert (@($installerBytes | Where-Object { $_ -gt 127 }).Count -eq 0) 'installer is pure ASCII for 5.1 and irm|iex'
+$parsedFull = $true
+try { $null = [scriptblock]::Create((Get-Content -LiteralPath $installer -Raw -Encoding UTF8)) } catch { $parsedFull = $false }
+Assert $parsedFull 'full installer parses as a scriptblock'
 
 # --- install location -------------------------------------------------------
 $docsFixture = Join-Path $testRoot 'documents'; New-Item -ItemType Directory -Path $docsFixture -Force | Out-Null

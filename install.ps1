@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -94,44 +94,16 @@ $script:Messages = @{
         'rollback.fail' = 'Rollback failed: {0}. The recovery manifest is kept at {1}; run -Uninstall or restore files from its backup folder.'
         failed = 'FAILED: {0}'
     }
-    ru = @{
-        game = 'Grim Dawn: {0} ({1})'
-        lang = 'Язык: {0}, пресет: {1}'
-        source = 'Источник: {0}'
-        root = 'Папка установки: {0}'
-        target = 'Файл: {0}'
-        backup = 'Бэкап: {0}'
-        dry = 'Пробный запуск: изменения не вносились.'
-        installed = 'Установлено: {0}'
-        restart = 'Перезапусти Grim Dawn, чтобы увидеть цвета.'
-        uninstalled = 'Удалено: {0}'
-        wouldremove = 'Будет удалено: {0}'
-        backupkept = 'Бэкап сохранён: {0}'
-        noinstall = 'Установка Rainbow Filter не найдена.'
-        'warn.docs' = 'Внимание: папка игры недоступна для записи, ставлю в Документы.'
-        'warn.nogame' = 'Внимание: папка игры не найдена, ставлю в Документы и беру текущий файл Fangs of Asterkarn.'
-        'warn.other' = 'Внимание: не удалось удалить запись о предыдущей установке в другой папке: {0}'
-        'version.foa' = 'Fangs of Asterkarn'
-        'version.fg' = 'Forgotten Gods'
-        'version.aom' = 'Ashes of Malmouth'
-        'version.base' = 'базовая игра'
-        'err.gamepath' = 'Это не папка Grim Dawn: {0}. Укажи -GamePath с папкой, где лежит Grim Dawn.exe.'
-        'err.nogame' = 'Grim Dawn не найден. Укажи -GamePath <папка игры> и повтори.'
-        'err.nodocs' = 'Папка Grim Dawn в Документах не найдена: {0}. Запусти Grim Dawn один раз или укажи -Location game.'
-        'err.notwritable' = 'Нет прав на запись в {0}. Укажи -Location documents.'
-        'err.nowritable' = 'Нет прав на запись в {0}, и папки {1} нет. Запусти Grim Dawn один раз или укажи -GamePath <папка игры>.'
-        'err.download' = 'Не удалось скачать {0}: {1}. Скачай файл с grimraynbow.com и укажи -FilePath <файл>.'
-        'err.invalid' = 'Ответ не похож на файл Raynbow (размер {0}). Используй -FilePath с файлом с grimraynbow.com.'
-        'err.header' = 'В файле нет шапки с путём установки. Нужен файл с grimraynbow.com.'
-        'err.notraynow' = 'Это не файл Grim Raynbow (нет заголовка версии Raynbow). Нужен файл с grimraynbow.com.'
-        'err.filepath' = 'Файл не найден: {0}. Укажи -FilePath с файлом, скачанным с grimraynbow.com.'
-        'err.manifest' = 'Не удалось записать манифест установки: {0}. Проверь права на запись в папку настроек.'
-        'err.verify' = 'Установленный файл не прошёл проверку: {0}. Установка отменена; повтори или укажи -FilePath со свежим файлом.'
-        'rollback.fail' = 'Откат не удался: {0}. Манифест восстановления сохранён в {1}; запусти -Uninstall или верни файлы из его папки бэкапа.'
-        failed = 'ОШИБКА: {0}'
-    }
 }
 
+# Russian strings are Base64-encoded so this file stays pure ASCII: Windows PowerShell 5.1
+# reads BOM-less UTF-8 as ANSI, and irm|iex rejects a UTF-8 BOM in the downloaded text.
+$ruJson = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('ew0KICAiZXJyLm5vZ2FtZSI6ICJHcmltIERhd24g0L3QtSDQvdCw0LnQtNC10L0uINCj0LrQsNC20LggLUdhbWVQYXRoIDzQv9Cw0L/QutCwINC40LPRgNGLPiDQuCDQv9C+0LLRgtC+0YDQuC4iLA0KICAidW5pbnN0YWxsZWQiOiAi0KPQtNCw0LvQtdC90L46IHswfSIsDQogICJlcnIuZmlsZXBhdGgiOiAi0KTQsNC50Lsg0L3QtSDQvdCw0LnQtNC10L06IHswfS4g0KPQutCw0LbQuCAtRmlsZVBhdGgg0YEg0YTQsNC50LvQvtC8LCDRgdC60LDRh9Cw0L3QvdGL0Lwg0YEgZ3JpbXJheW5ib3cuY29tLiIsDQogICJlcnIuaW52YWxpZCI6ICLQntGC0LLQtdGCINC90LUg0L/QvtGF0L7QtiDQvdCwINGE0LDQudC7IFJheW5ib3cgKNGA0LDQt9C80LXRgCB7MH0pLiDQmNGB0L/QvtC70YzQt9GD0LkgLUZpbGVQYXRoINGBINGE0LDQudC70L7QvCDRgSBncmltcmF5bmJvdy5jb20uIiwNCiAgIndhcm4uZG9jcyI6ICLQktC90LjQvNCw0L3QuNC1OiDQv9Cw0L/QutCwINC40LPRgNGLINC90LXQtNC+0YHRgtGD0L/QvdCwINC00LvRjyDQt9Cw0L/QuNGB0LgsINGB0YLQsNCy0LvRjiDQsiDQlNC+0LrRg9C80LXQvdGC0YsuIiwNCiAgInJvb3QiOiAi0J/QsNC/0LrQsCDRg9GB0YLQsNC90L7QstC60Lg6IHswfSIsDQogICJlcnIuaGVhZGVyIjogItCSINGE0LDQudC70LUg0L3QtdGCINGI0LDQv9C60Lgg0YEg0L/Rg9GC0ZHQvCDRg9GB0YLQsNC90L7QstC60LguINCd0YPQttC10L0g0YTQsNC50Lsg0YEgZ3JpbXJheW5ib3cuY29tLiIsDQogICJyZXN0YXJ0IjogItCf0LXRgNC10LfQsNC/0YPRgdGC0LggR3JpbSBEYXduLCDRh9GC0L7QsdGLINGD0LLQuNC00LXRgtGMINGG0LLQtdGC0LAuIiwNCiAgImRyeSI6ICLQn9GA0L7QsdC90YvQuSDQt9Cw0L/Rg9GB0Lo6INC40LfQvNC10L3QtdC90LjRjyDQvdC1INCy0L3QvtGB0LjQu9C40YHRjC4iLA0KICAiZXJyLmdhbWVwYXRoIjogItCt0YLQviDQvdC1INC/0LDQv9C60LAgR3JpbSBEYXduOiB7MH0uINCj0LrQsNC20LggLUdhbWVQYXRoINGBINC/0LDQv9C60L7QuSwg0LPQtNC1INC70LXQttC40YIgR3JpbSBEYXduLmV4ZS4iLA0KICAiZXJyLmRvd25sb2FkIjogItCd0LUg0YPQtNCw0LvQvtGB0Ywg0YHQutCw0YfQsNGC0YwgezB9OiB7MX0uINCh0LrQsNGH0LDQuSDRhNCw0LnQuyDRgSBncmltcmF5bmJvdy5jb20g0Lgg0YPQutCw0LbQuCAtRmlsZVBhdGggPNGE0LDQudC7Pi4iLA0KICAiZXJyLm5vdHJheW5vdyI6ICLQrdGC0L4g0L3QtSDRhNCw0LnQuyBHcmltIFJheW5ib3cgKNC90LXRgiDQt9Cw0LPQvtC70L7QstC60LAg0LLQtdGA0YHQuNC4IFJheW5ib3cpLiDQndGD0LbQtdC9INGE0LDQudC7INGBIGdyaW1yYXluYm93LmNvbS4iLA0KICAiYmFja3Vwa2VwdCI6ICLQkdGN0LrQsNC/INGB0L7RhdGA0LDQvdGR0L06IHswfSIsDQogICJyb2xsYmFjay5mYWlsIjogItCe0YLQutCw0YIg0L3QtSDRg9C00LDQu9GB0Y86IHswfS4g0JzQsNC90LjRhNC10YHRgiDQstC+0YHRgdGC0LDQvdC+0LLQu9C10L3QuNGPINGB0L7RhdGA0LDQvdGR0L0g0LIgezF9OyDQt9Cw0L/Rg9GB0YLQuCAtVW5pbnN0YWxsINC40LvQuCDQstC10YDQvdC4INGE0LDQudC70Ysg0LjQtyDQtdCz0L4g0L/QsNC/0LrQuCDQsdGN0LrQsNC/0LAuIiwNCiAgInZlcnNpb24uYmFzZSI6ICLQsdCw0LfQvtCy0LDRjyDQuNCz0YDQsCIsDQogICJlcnIubm90d3JpdGFibGUiOiAi0J3QtdGCINC/0YDQsNCyINC90LAg0LfQsNC/0LjRgdGMINCyIHswfS4g0KPQutCw0LbQuCAtTG9jYXRpb24gZG9jdW1lbnRzLiIsDQogICJ2ZXJzaW9uLmZnIjogIkZvcmdvdHRlbiBHb2RzIiwNCiAgImZhaWxlZCI6ICLQntCo0JjQkdCa0JA6IHswfSIsDQogICJlcnIubm93cml0YWJsZSI6ICLQndC10YIg0L/RgNCw0LIg0L3QsCDQt9Cw0L/QuNGB0Ywg0LIgezB9LCDQuCDQv9Cw0L/QutC4IHsxfSDQvdC10YIuINCX0LDQv9GD0YHRgtC4IEdyaW0gRGF3biDQvtC00LjQvSDRgNCw0Lcg0LjQu9C4INGD0LrQsNC20LggLUdhbWVQYXRoIDzQv9Cw0L/QutCwINC40LPRgNGLPi4iLA0KICAiZ2FtZSI6ICJHcmltIERhd246IHswfSAoezF9KSIsDQogICJlcnIudmVyaWZ5IjogItCj0YHRgtCw0L3QvtCy0LvQtdC90L3Ri9C5INGE0LDQudC7INC90LUg0L/RgNC+0YjRkdC7INC/0YDQvtCy0LXRgNC60YM6IHswfS4g0KPRgdGC0LDQvdC+0LLQutCwINC+0YLQvNC10L3QtdC90LA7INC/0L7QstGC0L7RgNC4INC40LvQuCDRg9C60LDQttC4IC1GaWxlUGF0aCDRgdC+INGB0LLQtdC20LjQvCDRhNCw0LnQu9C+0LwuIiwNCiAgInZlcnNpb24uZm9hIjogIkZhbmdzIG9mIEFzdGVya2FybiIsDQogICJub2luc3RhbGwiOiAi0KPRgdGC0LDQvdC+0LLQutCwIFJhaW5ib3cgRmlsdGVyINC90LUg0L3QsNC50LTQtdC90LAuIiwNCiAgInZlcnNpb24uYW9tIjogIkFzaGVzIG9mIE1hbG1vdXRoIiwNCiAgIndhcm4ubm9nYW1lIjogItCS0L3QuNC80LDQvdC40LU6INC/0LDQv9C60LAg0LjQs9GA0Ysg0L3QtSDQvdCw0LnQtNC10L3QsCwg0YHRgtCw0LLQu9GOINCyINCU0L7QutGD0LzQtdC90YLRiyDQuCDQsdC10YDRgyDRgtC10LrRg9GJ0LjQuSDRhNCw0LnQuyBGYW5ncyBvZiBBc3Rlcmthcm4uIiwNCiAgIndvdWxkcmVtb3ZlIjogItCR0YPQtNC10YIg0YPQtNCw0LvQtdC90L46IHswfSIsDQogICJiYWNrdXAiOiAi0JHRjdC60LDQvzogezB9IiwNCiAgImVyci5ub2RvY3MiOiAi0J/QsNC/0LrQsCBHcmltIERhd24g0LIg0JTQvtC60YPQvNC10L3RgtCw0YUg0L3QtSDQvdCw0LnQtNC10L3QsDogezB9LiDQl9Cw0L/Rg9GB0YLQuCBHcmltIERhd24g0L7QtNC40L0g0YDQsNC3INC40LvQuCDRg9C60LDQttC4IC1Mb2NhdGlvbiBnYW1lLiIsDQogICJ0YXJnZXQiOiAi0KTQsNC50Ls6IHswfSIsDQogICJpbnN0YWxsZWQiOiAi0KPRgdGC0LDQvdC+0LLQu9C10L3QvjogezB9IiwNCiAgImVyci5tYW5pZmVzdCI6ICLQndC1INGD0LTQsNC70L7RgdGMINC30LDQv9C40YHQsNGC0Ywg0LzQsNC90LjRhNC10YHRgiDRg9GB0YLQsNC90L7QstC60Lg6IHswfS4g0J/RgNC+0LLQtdGA0Ywg0L/RgNCw0LLQsCDQvdCwINC30LDQv9C40YHRjCDQsiDQv9Cw0L/QutGDINC90LDRgdGC0YDQvtC10LouIiwNCiAgInNvdXJjZSI6ICLQmNGB0YLQvtGH0L3QuNC6OiB7MH0iLA0KICAibGFuZyI6ICLQr9C30YvQujogezB9LCDQv9GA0LXRgdC10YI6IHsxfSIsDQogICJ3YXJuLm90aGVyIjogItCS0L3QuNC80LDQvdC40LU6INC90LUg0YPQtNCw0LvQvtGB0Ywg0YPQtNCw0LvQuNGC0Ywg0LfQsNC/0LjRgdGMINC+INC/0YDQtdC00YvQtNGD0YnQtdC5INGD0YHRgtCw0L3QvtCy0LrQtSDQsiDQtNGA0YPQs9C+0Lkg0L/QsNC/0LrQtTogezB9Ig0KfQ=='))
+$ruMessages = ConvertFrom-Json $ruJson
+$script:Messages['ru'] = @{}
+foreach ($property in $ruMessages.PSObject.Properties) {
+    $script:Messages['ru'][$property.Name] = [string]$property.Value
+}
 function Get-Msg([string]$Key) {
     $table = $script:Messages[$script:MessageLanguage]
     if ($table.ContainsKey($Key)) { return $table[$Key] }
@@ -181,7 +153,7 @@ function Get-UserDataRoot {
 function Get-GameLanguage([string]$UserDataRoot) {
     $options = Join-Path $UserDataRoot 'Settings\options.txt'
     if (-not (Test-Path -LiteralPath $options)) { return $null }
-    $line = Get-Content -LiteralPath $options -TotalCount 200 -ErrorAction SilentlyContinue |
+    $line = Get-Content -LiteralPath $options -ErrorAction SilentlyContinue |
         Where-Object { $_ -match '^\s*language\s*=\s*"?([^"]+)"?' } | Select-Object -First 1
     if (-not $line) { return $null }
     if ($line -notmatch '^\s*language\s*=\s*"?([^"]+)"?') { return $null }
@@ -344,30 +316,31 @@ function Save-FilterDownload([string]$Url) {
     $temp = Join-Path ([IO.Path]::GetTempPath()) ('grimraynbow-' + [guid]::NewGuid().ToString('N') + '.txt')
     try {
         Invoke-WebRequest -Uri $Url -OutFile $temp -UseBasicParsing -TimeoutSec 120 -ErrorAction Stop
-        $size = (Get-Item -LiteralPath $temp).Length
-        if ($size -lt 50000) { throw ((Get-Msg 'err.invalid') -f $size) }
-        return $temp
     } catch {
         if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force -ErrorAction SilentlyContinue }
-        if ($_.Exception.Message -like '*valid Raynbow*' -or $_.Exception.Message -like '*файл Raynbow*') { throw }
         throw ((Get-Msg 'err.download') -f $Url, $_.Exception.Message)
     }
+    $size = (Get-Item -LiteralPath $temp).Length
+    if ($size -lt 50000) {
+        Remove-Item -LiteralPath $temp -Force -ErrorAction SilentlyContinue
+        throw ((Get-Msg 'err.invalid') -f $size)
+    }
+    return $temp
 }
 
 function Read-FilterInMemory([string]$Url) {
     try {
         $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 120 -ErrorAction Stop
-        if ($response.Content -is [byte[]]) {
-            $text = [Text.Encoding]::UTF8.GetString($response.Content)
-        } else {
-            $text = [string]$response.Content
-        }
-        if ($text.Length -lt 50000) { throw ((Get-Msg 'err.invalid') -f $text.Length) }
-        return $text
     } catch {
-        if ($_.Exception.Message -like '*valid Raynbow*' -or $_.Exception.Message -like '*файл Raynbow*') { throw }
         throw ((Get-Msg 'err.download') -f $Url, $_.Exception.Message)
     }
+    if ($response.Content -is [byte[]]) {
+        $text = [Text.Encoding]::UTF8.GetString($response.Content)
+    } else {
+        $text = [string]$response.Content
+    }
+    if ($text.Length -lt 50000) { throw ((Get-Msg 'err.invalid') -f $text.Length) }
+    return $text
 }
 
 function Get-HeaderText([string]$Path) {
